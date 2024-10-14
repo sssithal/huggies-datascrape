@@ -89,7 +89,9 @@ import openai
 
 #print(docs)
 
-store = FAISS.from_texts(docs, OpenAIEmbeddings(openai_api_key = "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"), metadatas=metadatas)
+store = FAISS.from_texts(docs, OpenAIEmbeddings(openai_api_key = "{Insert Own Key}"), metadatas=metadatas)
+
+
 with open("KC_HUGGIES_faiss.pkl", "wb") as f:
     pickle.dump(store, f)
 
@@ -105,7 +107,7 @@ import re
 import pickle
 
 # Define your OpenAI API key here
-openai_api_key = "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"
+openai_api_key = "{Insert Own Key}"
 
 # Initialize global variables
 chat_history = []
@@ -245,25 +247,3 @@ for link_info in scraped_links_info:
         embeddings.append(embedding_data)
         # print(response)
     all_embeddings.append(embeddings)
-
-"""
-flattened_embeddings = [embedding for embeddings in all_embeddings for embedding in embeddings]
-
-# convert the flattened list into array
-embeddings_array = np.array(flattened_embeddings)
-#print(embeddings_array.shape)
-
-
-
-# store and initialize the embeddings in FAISS vector database
-index = faiss.IndexFlatIP(embeddings_array.shape[1])
-index.add(embeddings_array)
-
-"""
-# save the FAISS index to a file
-# faiss.write_index(index, "huggies_faiss.index")
-"""
-
-store = FAISS.from_texts(embeddings_array, OpenAIEmbeddings(openai_api_key = "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"))
-with open("KC_HUGGIES_faiss_3000.pkl", "wb") as f:
-    pickle.dump(store, f)
